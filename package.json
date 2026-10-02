@@ -1,0 +1,18 @@
+{
+  "name": "steelsmart-studio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test tests/unit/model.test.js tests/unit/experience-math.test.js tests/unit/lab-model.test.js tests/unit/studio-tools-model.test.js tests/unit/material-planner.test.js tests/unit/drawing-sheet.test.js tests/unit/ui-scheduler.test.js tests/unit/pointer-drag.test.js tests/unit/server.test.js",
+    "test:browser": "node tests/browser/browser-check.js",
+    "test:experience": "node tests/browser/experience-browser-check.js",
+    "test:lab": "node tests/browser/lab-browser-check.js",
+    "test:tools": "node tests/browser/studio-tools-browser-check.js",
+    "test:tools:regression": "node tests/browser/studio-tools-regression-check.js",
+    "test:performance": "node tests/browser/performance-browser-check.js",
+    "test:reliability": "node tests/browser/reliability-browser-check.js",
+    "test:context": "node tests/browser/context-loss-browser-check.js"
+  }
+}

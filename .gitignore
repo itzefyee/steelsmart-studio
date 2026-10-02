@@ -1,0 +1,20 @@
+# Generated test output
+artifacts/
+
+# Dependencies and local runtime output
+node_modules/
+coverage/
+*.log
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Editor and operating system files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
