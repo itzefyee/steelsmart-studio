@@ -39,5 +39,6 @@ export function createAppServer({root=resolve(import.meta.dirname),maxCacheEntri
   });
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
-  const port=Number(process.env.PORT)||4310;createAppServer().listen(port,'127.0.0.1',()=>console.log('SteelSmart Studio: http://localhost:'+port));
+  const port=Number(process.env.PORT)||4310,host=process.env.HOST||'127.0.0.1';
+  createAppServer().listen(port,host,()=>console.log('SteelSmart Studio listening on '+host+':'+port));
 }

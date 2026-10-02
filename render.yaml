@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: steelsmart-studio
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm install --ignore-scripts
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
