@@ -69,7 +69,8 @@ Three.js and Manrope are self-hosted under their respective license files in `ve
 ## Deploy on Render
 
 The root [`render.yaml`](render.yaml) defines a free Node web service in Singapore.
-Its build runs `npm test`, then `npm start` serves the site on Render's `PORT` and `HOST=0.0.0.0`.
+Its build runs `npm test`, then `npm start` serves the site on Render's `PORT` and binds to `0.0.0.0` when Render sets `RENDER=true`.
+This works when the service is created from the Blueprint or as a Web Service in the Render dashboard.
 The project has no npm dependencies, so the build does not need an install step.
 The Node engine range supports versions 22 through 24 and prevents an automatic jump to a newer major version.
 

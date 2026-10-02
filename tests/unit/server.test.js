@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {request} from 'node:http';
+import {spawn} from 'node:child_process';
+import {createServer as createNetServer} from 'node:net';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {gunzipSync,brotliDecompressSync} from 'node:zlib';
@@ -29,4 +31,28 @@ test('cached files are refreshed after edits',async()=>{
 test('safe routing rejects traversal, docs, malformed URLs and unsupported methods',async()=>{
   assert.equal((await get('/')).status,200);for(const path of ['/../package.json','/%2e%2e%5capp.js','/docs/private.js','/.hidden.js','/missing.js'])assert.equal((await get(path)).status,404,path);
   assert.equal((await get('/%ZZ')).status,400);assert.equal((await get('/model.js',{},'POST')).status,405);
+});
+test('Render startup binds publicly without a HOST override',async()=>{
+  const probe=createNetServer();
+  await new Promise(resolve=>probe.listen(0,'127.0.0.1',resolve));
+  const renderPort=probe.address().port;
+  await new Promise(resolve=>probe.close(resolve));
+  const {HOST,...env}=process.env;
+  const child=spawn(process.execPath,['server.js'],{cwd:resolve('.'),env:{...env,RENDER:'true',PORT:String(renderPort)},stdio:['ignore','pipe','pipe']});
+  let output='';
+  try{
+    await new Promise((resolve,reject)=>{
+      const timeout=setTimeout(()=>reject(new Error('Render startup timed out: '+output)),10000);
+      child.stdout.on('data',chunk=>{output+=chunk;if(output.includes('listening on 0.0.0.0:'+renderPort)){clearTimeout(timeout);resolve();}});
+      child.stderr.on('data',chunk=>{output+=chunk;});
+      child.once('error',error=>{clearTimeout(timeout);reject(error);});
+      child.once('exit',code=>{clearTimeout(timeout);reject(new Error('Render startup exited '+code+': '+output));});
+    });
+    const response=await fetch('http://127.0.0.1:'+renderPort+'/');
+    assert.equal(response.status,200);
+    assert.match(await response.text(),/SteelSmart/);
+  }finally{
+    child.kill();
+    if(child.exitCode===null)await new Promise(resolve=>child.once('exit',resolve));
+  }
 });
