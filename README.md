@@ -66,6 +66,19 @@ This is a concept tool. The parser is rules based and runs locally; it is not an
 
 Three.js and Manrope are self-hosted under their respective license files in `vendor/` and `assets/`. The project has no declared license for its own source.
 
+## Deploy on Render
+
+The root [`render.yaml`](render.yaml) defines a free Node web service in Singapore.
+Its build runs `npm test`, then `npm start` serves the site on Render's `PORT` and `HOST=0.0.0.0`.
+The project has no npm dependencies, so the build does not need an install step.
+The Node engine range supports versions 22 through 24 and prevents an automatic jump to a newer major version.
+
+In the Render dashboard, select **New > Blueprint**, connect the private [GitHub repository](https://github.com/itzefyee/steelsmart-studio), and deploy the Blueprint from `main`.
+Grant the Render GitHub app access to this private repository if it does not appear in the repository list.
+Render will check `/` for service health and provide the public site URL after deployment.
+The source repository remains private, while a Render web service is publicly reachable.
+
 ## Git
 
-This folder is a standalone repository. Generated `artifacts/`, local dependencies, credentials, and editor files are ignored. No remote is configured by default; add your own remote if you intend to publish it.
+This folder is a standalone repository connected to the private GitHub repository above.
+Generated `artifacts/`, local dependencies, credentials, and editor files are ignored.

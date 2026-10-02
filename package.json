@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22 <25"
+  },
   "scripts": {
     "start": "node server.js",
     "test": "node --test tests/unit/model.test.js tests/unit/experience-math.test.js tests/unit/lab-model.test.js tests/unit/studio-tools-model.test.js tests/unit/material-planner.test.js tests/unit/drawing-sheet.test.js tests/unit/ui-scheduler.test.js tests/unit/pointer-drag.test.js tests/unit/server.test.js",
