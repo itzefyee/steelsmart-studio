@@ -79,6 +79,16 @@ Grant the Render GitHub app access to this private repository if it does not app
 Render will check `/` for service health and provide the public site URL after deployment.
 The source repository remains private, while a Render web service is publicly reachable.
 
+## Deploy on Vercel
+
+The root [`vercel.json`](vercel.json) configures Vercel to run `npm run build` and serve the generated `dist/` directory as a static site.
+The build stages the browser pages, modules, styles, fonts, and Three.js files without including the local Node server, tests, or project docs.
+There are no npm dependencies or environment variables to configure.
+
+Import the repository in Vercel and deploy from `main` with the default project settings.
+Vercel detects `vercel.json` and uses the configured build command and output directory.
+The homepage is `/` and the CAD workspace is `/studio.html`.
+
 ## Git
 
 This folder is a standalone repository connected to the private GitHub repository above.

@@ -1,5 +1,6 @@
 # Generated test output
 artifacts/
+dist/
 
 # Dependencies and local runtime output
 node_modules/
